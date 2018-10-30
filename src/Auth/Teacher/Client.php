@@ -15,21 +15,37 @@ use Hkep\Auth\Kernel\BaseClient;
 class Client extends BaseClient {
 
     /**
-     * oa/userinfo 取得使用者資訊
-     *
-     * @return \Psr\Http\Message\ResponseInterface|\Hkep\Kernel\Support\Collection|array|object|string
-     *
-     * @throws \Hkep\Kernel\Exceptions\InvalidConfigException
+     * /auth/getclassesbymember
+     * 取得使用者身份為教師的任教班別及科目
      */
-    public function userinfo($academicYear = null) {
+    public function getclasses($membercode, $academicYear = null) {
         $params = [
-            'access_token'    => $this->app['config']->accessToken,
+            'access_token' => $this->app['config']->accessToken,
+            'membercode' => $membercode,
         ];
 
         if($academicYear) {
             $params['academic_year'] = $academicYear;
         }
 
-        return $this->request($this->wrap('oa/userinfo'), $params, 'post');
+        return $this->requestRaw($this->wrap('auth/getclassesbymember'), $params);
+    }
+
+    /**
+     * /auth/getgroupsbymember
+     * 取得使用者身份為教師所創建的所有組別
+     * 
+     */
+    public function getgroups($membercode, $academicYear = null) {
+        $params = [
+            'access_token' => $this->app['config']->accessToken,
+            'membercode' => $membercode,
+        ];
+
+        if($academicYear) {
+            $params['academic_year'] = $academicYear;
+        }
+
+        return $this->requestRaw($this->wrap('auth/getgroupsbymember'), $params);
     }
 }

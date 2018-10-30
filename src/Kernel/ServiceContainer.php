@@ -81,7 +81,7 @@ class ServiceContainer extends Container
             // http://docs.guzzlephp.org/en/stable/request-options.html
             'http' => [
                 'timeout' => 5.0,
-                'base_uri' => 'http://zhifu.99.com/sdp/paysdk/chargev2/',
+                'base_uri' => 'https://dev.hkep.com/mpmsapi/',
             ],
         ];
 

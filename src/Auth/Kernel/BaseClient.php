@@ -68,9 +68,7 @@ class BaseClient {
         if (empty($this->middlewares)) {
             $this->registerHttpMiddlewares();
         }
-        $base = [
-            'appId' => $this->app['config']['appId'],
-        ];
+        $base = [];
         $params = array_merge($base, $this->prepends(), $params);
         
         if (strtoupper($method) == 'GET') {

@@ -16,14 +16,11 @@ class Client extends BaseClient {
 
     /**
      * oa/userinfo 取得使用者資訊
-     *
-     * @return \Psr\Http\Message\ResponseInterface|\Hkep\Kernel\Support\Collection|array|object|string
-     *
-     * @throws \Hkep\Kernel\Exceptions\InvalidConfigException
+     * 
      */
     public function userinfo($academicYear = null) {
         $params = [
-            'access_token'    => $this->app['config']->accessToken,
+            'access_token' => $this->app['config']->accessToken,
         ];
 
         if($academicYear) {
@@ -31,5 +28,23 @@ class Client extends BaseClient {
         }
 
         return $this->request($this->wrap('oa/userinfo'), $params, 'post');
+    }
+
+    /**
+     *  /auth/logout
+     * 登出使用者
+     * 
+     */
+    public function logout($membercode, $prodcode = null) {
+        $params = [
+            'access_token' => $this->app['config']->accessToken,
+            'membercode' => $membercode,
+        ];
+
+        if($prodcode) {
+            $params['prodcode'] = $prodcode;
+        }
+
+        return $this->requestRaw($this->wrap('auth/logout'), $params);
     }
 }
