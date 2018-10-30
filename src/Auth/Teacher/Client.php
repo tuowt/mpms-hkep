@@ -28,7 +28,7 @@ class Client extends BaseClient {
             $params['academic_year'] = $academicYear;
         }
 
-        return $this->requestRaw($this->wrap('auth/getclassesbymember'), $params);
+        return $this->request($this->wrap('auth/getclassesbymember'), $params, 'post');
     }
 
     /**
@@ -46,6 +46,6 @@ class Client extends BaseClient {
             $params['academic_year'] = $academicYear;
         }
 
-        return $this->requestRaw($this->wrap('auth/getgroupsbymember'), $params);
+        return $this->request($this->wrap('auth/getgroupsbymember'), $params, 'post');
     }
 }

@@ -45,7 +45,7 @@ class Client extends BaseClient {
             'lite' => $lite,
         ];
 
-        return $this->requestRaw($this->wrap('auth/user_permission'), $params);
+        return $this->request($this->wrap('auth/user_permission'), $params, 'post');
     }
 
     /**
@@ -63,6 +63,6 @@ class Client extends BaseClient {
             $params['prodcode'] = $prodcode;
         }
 
-        return $this->requestRaw($this->wrap('auth/logout'), $params);
+        return $this->request($this->wrap('auth/logout'), $params, 'post');
     }
 }
