@@ -36,3 +36,11 @@ pr($result);
 $result = $app->user->logout($membercode, $prodcode = null);
 pr($result);
 ```
+
+### 取得登入使用者授權項目
+
+```php
+// 可选参数 $lite = 0,简化模式;1,一般模式，默认简化模式
+$result = $app->user->permission($lite = 0);
+pr($result);
+```

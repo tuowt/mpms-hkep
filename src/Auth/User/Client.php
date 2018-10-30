@@ -31,6 +31,24 @@ class Client extends BaseClient {
     }
 
     /**
+     * /auth/user_permission
+     * 取得登入使用者授權項目 (Authority Group) ，此功能僅以請求當時的授權情況為準。
+     * 
+     * 本功能有兩個模式:「簡易模式」及「一般模式」，
+     * 於簡易模式中，使用者的授權項 目 ID 將會以字串形式列出，並不會附加其他資訊。
+     * 於一般模式中，使用者的授權項目 會以物件形式列出，當中除了授權項目的 ID 外，還會附加授權項目的屬性。
+     * 
+     */
+    public function permission($lite = 0) {
+        $params = [
+            'access_token' => $this->app['config']->accessToken,
+            'lite' => $lite,
+        ];
+
+        return $this->requestRaw($this->wrap('auth/user_permission'), $params);
+    }
+
+    /**
      *  /auth/logout
      * 登出使用者
      * 
