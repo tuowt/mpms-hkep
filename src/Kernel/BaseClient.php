@@ -164,7 +164,7 @@ class BaseClient
     public function getHttpClient(): Client
     {
         if (!($this->httpClient instanceof Client)) {
-            $this->httpClient = $this->app['http_client'] ?? new Client();
+            $this->httpClient = isset($this->app['http_client']) ? $this->app['http_client'] : new Client();
         }
 
         return $this->httpClient;
@@ -188,7 +188,7 @@ class BaseClient
      */
     protected function logMiddleware()
     {
-        $formatter = new MessageFormatter($this->app['config']['http.log_template'] ?? MessageFormatter::DEBUG);
+        $formatter = new MessageFormatter(isset($this->app['config']['http.log_template']) ? $this->app['config']['http.log_template'] : MessageFormatter::DEBUG);
 
         return Middleware::log($this->app['logger'], $formatter);
     }

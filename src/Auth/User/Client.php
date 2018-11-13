@@ -27,7 +27,7 @@ class Client extends BaseClient {
             $params['academic_year'] = $academicYear;
         }
 
-        return $this->request($this->wrap('oa/userinfo'), $params, 'post');
+        return $this->httpPost($this->wrap('oa/userinfo'), $params);
     }
 
     /**
@@ -45,7 +45,7 @@ class Client extends BaseClient {
             'lite' => $lite,
         ];
 
-        return $this->request($this->wrap('auth/user_permission'), $params, 'post');
+        return $this->httpPost($this->wrap('auth/user_permission'), $params);
     }
 
     /**
@@ -63,6 +63,6 @@ class Client extends BaseClient {
             $params['prodcode'] = $prodcode;
         }
 
-        return $this->request($this->wrap('auth/logout'), $params, 'post');
+        return $this->httpPost($this->wrap('auth/logout'), $params);
     }
 }

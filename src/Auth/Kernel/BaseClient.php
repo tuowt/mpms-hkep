@@ -64,22 +64,62 @@ class BaseClient {
      *
      * @throws \Hkep\Kernel\Exceptions\InvalidConfigException
      */
-    protected function request($endpoint, $params = [], $method = 'get', $options = [], $returnResponse = false) {
+    protected function request($endpoint, $method = 'get', $options = [], $returnResponse = false) {
         if (empty($this->middlewares)) {
             $this->registerHttpMiddlewares();
         }
-        $base = [];
-        $params = array_merge($base, $this->prepends(), $params);
-        
-        if (strtoupper($method) == 'GET') {
-            $params = ['query' => $params];
-        } else {
-            $params = ['form_params' => $params];
-        }
 
-        $response = $this->performRequest($endpoint, $method, $params);
+        $options = array_merge($options, $this->getHeaders());
+
+        $response = $this->performRequest($endpoint, $method, $options);
 
         return $returnResponse ? $response : $this->castResponseToType($response, $this->app->config->get('response_type'));
+    }
+
+    /**
+     * GET request.
+     *
+     * @param string $url
+     * @param array  $query
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\Hkep\Kernel\Support\Collection|array|object|string
+     *
+     * @throws \Hkep\Kernel\Exceptions\InvalidConfigException
+     */
+    public function httpGet($url, $query = [])
+    {
+        return $this->request($url, 'GET', ['query' => $query]);
+    }
+
+    /**
+     * POST request.
+     *
+     * @param string $url
+     * @param array  $data
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\Hkep\Kernel\Support\Collection|array|object|string
+     *
+     * @throws \Hkep\Kernel\Exceptions\InvalidConfigException
+     */
+    public function httpPost($url, $data = [])
+    {
+        return $this->request($url, 'POST', ['form_params' => $data]);
+    }
+
+    /**
+     * JSON request.
+     *
+     * @param string       $url
+     * @param string|array $data
+     * @param array        $query
+     *
+     * @return \Psr\Http\Message\ResponseInterface|\Hkep\Kernel\Support\Collection|array|object|string
+     *
+     * @throws \Hkep\Kernel\Exceptions\InvalidConfigException
+     */
+    public function httpPostJson($url, $data = [], $query = [])
+    {
+        return $this->request($url, 'POST', ['query' => $query, 'json' => $data]);
     }
 
     /**
@@ -160,5 +200,14 @@ class BaseClient {
      */
     protected function wrap($endpoint) {
         return $endpoint;
+    }
+
+    protected function getHeaders() {
+        return [
+            'headers' => [
+                // 'User-Agent' => 'testing/1.0',
+                'Authorization' => 'Bearer ' .$this->app['config']->accessToken,
+            ]
+        ];
     }
 }

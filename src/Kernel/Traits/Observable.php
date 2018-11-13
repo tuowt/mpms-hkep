@@ -178,7 +178,7 @@ trait Observable
             }
 
             return function ($payload) use ($handler) {
-                return (new $handler($this->app ?? null))->handle($payload);
+                return (new $handler(isset($this->app) ? $this->app : null))->handle($payload);
             };
         }
 

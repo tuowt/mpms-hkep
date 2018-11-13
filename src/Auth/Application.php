@@ -18,6 +18,7 @@ use Hkep\Kernel\Support;
  *
  * @property \Hkep\Auth\User\Client           $user      用户(包括老师学生通用操作)
  * @property \Hkep\Auth\Teacher\Client        $teacher   老师
+ * @property \Hkep\Auth\AuthCode\Client       $authCode  授权码
  */
 class Application extends ServiceContainer
 {
@@ -27,6 +28,7 @@ class Application extends ServiceContainer
     protected $providers = [
         User\ServiceProvider::class,
         Teacher\ServiceProvider::class,
+        AuthCode\ServiceProvider::class,
     ];
 
     /**
