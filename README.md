@@ -44,3 +44,11 @@ pr($result);
 $result = $app->user->permission($lite = 0);
 pr($result);
 ```
+
+### 取得班別的學生及同班的老師的信息
+
+```php
+// 必填参数$classid = 班级编号
+$result = $app->student->getStudentsByClass($classid);
+pr($result);
+```

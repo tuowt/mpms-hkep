@@ -31,7 +31,7 @@ class Client extends BaseClient {
      */
     public function disable($items) {
         $params = [
-            'membercode' => $items,
+            'items' => $items,
         ];
         
         return $this->httpPostJson('groupid/disable', $params);

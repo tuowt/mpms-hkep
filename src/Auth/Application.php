@@ -28,6 +28,7 @@ class Application extends ServiceContainer
     protected $providers = [
         User\ServiceProvider::class,
         Teacher\ServiceProvider::class,
+        Student\ServiceProvider::class,
         AuthCode\ServiceProvider::class,
     ];
 
